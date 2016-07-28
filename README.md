@@ -27,8 +27,8 @@ npm install -g hpm-cli
     ls, list               List installed plugins
     s, search <query>      Search for plugins on npm
     ls-remote              List plugins available on npm
-    d, docs <plugin>       Open the npm page of the <plguin>
-    f, fork <plguin>       Forks a plugin from npm into your ~/.hyperterm_plugins/local
+    d, docs <plugin>       Open the npm page of the <plugin>
+    f, fork <plugin>       Forks a plugin from npm into your ~/.hyperterm_plugins/local
 ```
 
 ## Upcoming
