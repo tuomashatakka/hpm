@@ -1,6 +1,6 @@
 {
   "name": "hpm-cli",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A plugin manager for HyperTerm",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "hpm": "./index.js"
   },
   "files": [
-    "hyperterm.js",
+    "api.js",
     "index.js"
   ],
   "repository": {
