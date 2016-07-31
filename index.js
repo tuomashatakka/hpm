@@ -94,22 +94,20 @@ if (program.search) {
 			});
 		})
 		.then(entries => {
-			spinner.stop();
 			if (entries.length === 0) {
-				console.error(`${chalk.red('✖')} Searching`);
+				spinner.fail();
 				console.error(chalk.red(`Your search '${query}' did not match any plugins`));
 				console.error(`${chalk.red('Try')} ${chalk.green('hpm ls-remote')}`);
 				process.exit(1);
 			} else {
 				let msg = columnify(entries);
 
-				console.log(`${chalk.green('✔')} Searching`);
+				spinner.succeed();
 				msg = msg.substring(msg.indexOf('\n') + 1); // remove header
 				console.log(msg);
 			}
 		}).catch(err => {
-			spinner.stop();
-			console.error(`${chalk.red('✖')} Searching`);
+			spinner.fail();
 			console.error(chalk.red(err)); // TODO
 		});
 }
@@ -121,14 +119,11 @@ if (program.lsRemote) {
 		.then(entries => {
 			let msg = columnify(entries);
 
-			spinner.stop();
-			console.log(`${chalk.green('✔')} Searching`);
-
+			spinner.succeed();
 			msg = msg.substring(msg.indexOf('\n') + 1); // remove header
 			console.log(msg);
 		}).catch(err => {
-			spinner.stop();
-			console.error(`${chalk.red('✖')} Searching`);
+			spinner.fail();
 			console.error(chalk.red(err)); // TODO
 		});
 }
@@ -142,8 +137,7 @@ if (program.fork) {
 	const plugin = program.fork;
 	return api.existsOnNpm(plugin).then(() => {
 		if (api.isInstalled(plugin, true)) {
-			spinner.stop();
-			console.error(`${chalk.red('✖')} Installing`);
+			spinner.fail();
 			console.error(chalk.red(`${plugin} is already installed locally`));
 			process.exit(1);
 		}
@@ -158,19 +152,16 @@ if (program.fork) {
 			.then(() => pify(rename)(`${folderName}/node_modules/${plugin}`, `${folderName}/${plugin}`))
 			.then(() => api.install(plugin, true))
 			.then(() => {
-				spinner.stop();
-				console.log(`${chalk.green('✔')} Installing`);
+				spinner.succeed();
 				console.log(chalk.green(`${plugin} installed locally successfully!`));
 				console.log(chalk.green(`Check ${folderName}/${plugin}`));
 			})
 			.catch(err => {
-				spinner.stop();
-				console.error(`${chalk.red('✖')} Installing`);
+				spinner.fail();
 				console.error(chalk.red(err)); // TODO
 			});
 	}).catch(err => {
-		spinner.stop();
-		console.error(`${chalk.red('✖')} Installing`);
+		spinner.fail();
 		if (err.code === 'NOT_FOUND_ON_NPM') {
 			console.error(chalk.red(err.message));
 		} else {
