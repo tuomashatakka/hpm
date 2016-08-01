@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
-const {rename, writeFileSync} = require('fs');
-const {homedir} = require('os');
+const fs = require('fs');
+const os = require('os');
 
 const chalk = require('chalk');
 const columnify = require('columnify');
@@ -142,14 +142,14 @@ if (program.fork) {
 			process.exit(1);
 		}
 
-		const folderName = `${homedir()}/.hyperterm_plugins/local`;
+		const folderName = `${os.homedir()}/.hyperterm_plugins/local`;
 		const fileName = `${folderName}/package.json`;
 		if (!fileExists(fileName)) {
-			writeFileSync(fileName, '{"name": "hpm-placeholder"}', 'utf-8');
+			fs.writeFileSync(fileName, '{"name": "hpm-placeholder"}', 'utf-8');
 		}
 
 		execa('npm', ['i', plugin], {cwd: folderName})
-			.then(() => pify(rename)(`${folderName}/node_modules/${plugin}`, `${folderName}/${plugin}`))
+			.then(() => pify(fs.rename)(`${folderName}/node_modules/${plugin}`, `${folderName}/${plugin}`))
 			.then(() => api.install(plugin, true))
 			.then(() => {
 				spinner.succeed();
