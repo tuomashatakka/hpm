@@ -32,14 +32,15 @@ npm install -g hpm-cli
 ```
 
 ## Upcoming
-- [ ] `hpm view hyperpower`
-- [ ] `hpm i hyperpower@beta`
-- [ ] `hpm u --tmp`
-- [ ] `hpm uninstall --local`
+- [ ] `hpm view hyperpower` – something similar to `npm view`
+- [ ] `hpm i hyperpower@beta` – same as `npm i package@tag`
+- [ ] `hpm u --tmp` – comment the plugin in `.hyperterm.js` instead of deleting it
 - [ ] Bulk commands (e.g. `hpm i hyperpower hyperyellow`)
-- [ ] `hpm help`
-- [X] `hpm i hyperpower#1.0.0`
-- [X] `hpm fork hyperpower`
+- [ ] `hpm help` – same as `npm help`
+
+## Done 
+- [x] `hpm i hyperpower#1.0.0`
+- [x] `hpm fork hyperpower`
 - [x] `hpm search <query>`
 - [x] `hpm unistall <plugin>`
 - [x] `hpm ls`
