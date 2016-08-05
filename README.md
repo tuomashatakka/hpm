@@ -1,4 +1,4 @@
-# hpm [![Build Status](https://travis-ci.org/matheuss/hpm.svg?branch=master)](https://travis-ci.org/matheuss/hpm) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![Coverage Status](https://coveralls.io/repos/github/matheuss/hpm/badge.svg?branch=master)](https://coveralls.io/github/matheuss/hpm?branch=master) [![codecov](https://codecov.io/gh/matheuss/hpm/branch/master/graph/badge.svg)](https://codecov.io/gh/matheuss/hpm)
+# hpm [![Build Status](https://travis-ci.org/matheuss/hpm.svg?branch=master)](https://travis-ci.org/matheuss/hpm) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![Coverage Status](https://coveralls.io/repos/github/matheuss/hpm/badge.svg?branch=master)](https://coveralls.io/github/matheuss/hpm?branch=master)
 
 
 ✨ A plugin manager for HyperTerm ✨
@@ -38,7 +38,7 @@ npm install -g hpm-cli
 - [ ] Bulk commands (e.g. `hpm i hyperpower hyperyellow`)
 - [ ] `hpm help` – same as `npm help`
 
-## Done 
+## Done
 - [x] `hpm i hyperpower#1.0.0`
 - [x] `hpm fork hyperpower`
 - [x] `hpm search <query>`
