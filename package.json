@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "xo && nyc ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "bin": {
     "hpm": "./index.js"
@@ -55,7 +55,6 @@
   },
   "devDependencies": {
     "ava": "^0.15.2",
-    "codecov": "^1.0.1",
     "coveralls": "^2.11.11",
     "is-ci": "^1.0.9",
     "mock-fs": "^3.11.0",
