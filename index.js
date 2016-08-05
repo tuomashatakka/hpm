@@ -26,7 +26,7 @@ program
 	.option('ls, list', 'List installed plugins')
 	.option('s, search <query>', 'Search for plugins on npm')
 	.option('ls-remote', 'List plugins available on npm')
-	.option('d, docs <plugin>', 'Open the npm page of the <plugin>')
+	.option('d, docs <plugin>', 'Open the npm page of the <plugin> (alias: home)')
 	.option('f, fork <plugin>', 'Forks a plugin from npm into your ~/.hyperterm_plugins/local')
 	.parse(process.argv);
 
@@ -128,6 +128,9 @@ if (program.lsRemote) {
 		});
 }
 
+if (program.args[0] === 'home') {
+	program.docs = program.args[1];
+}
 if (program.docs) {
 	return opn(`https://npmjs.com/package/${program.docs}`, {wait: false});
 }
