@@ -153,6 +153,7 @@ if (program.fork) {
 
 		execa('npm', ['i', plugin], {cwd: folderName})
 			.then(() => pify(fs.rename)(`${folderName}/node_modules/${plugin}`, `${folderName}/${plugin}`))
+			.then(() => api.uninstall(plugin))
 			.then(() => api.install(plugin, true))
 			.then(() => {
 				spinner.succeed();
