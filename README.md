@@ -14,21 +14,25 @@ npm install -g hpm-cli
 ## Usage
 
 ```
-❯ hpm --help
+❯ hpm help
 
-  Usage: hpm [options]
+  Usage: hpm [options] [command]
+
+  Commands:
+
+    d, docs, h, home          Open the npm page of a plugin
+    f, fork                   Fork a plugin from npm into your ~/.hyperterm_plugins/local
+    help                      Display help
+    i, install                Install a plugin
+    ls, list                  List installed plugins
+    ls-remote                 List plugins available on npm
+    s, search                 Search for plugins on npm
+    u, uninstall, rm, remove  Uninstall a plugin
 
   Options:
 
-    -h, --help             output usage information
-    -V, --version          output the version number
-    i, install <plugin>    Install a plugin
-    u, uninstall <plugin>  Uninstall a plugin (aliases: rm, remove)
-    ls, list               List installed plugins
-    s, search <query>      Search for plugins on npm
-    ls-remote              List plugins available on npm
-    d, docs <plugin>       Open the npm page of the <plugin>
-    f, fork <plugin>       Forks a plugin from npm into your ~/.hyperterm_plugins/local
+    -h, --help     Output usage information
+    -v, --version  Output the version number
 ```
 
 ## Upcoming

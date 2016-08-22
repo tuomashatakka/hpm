@@ -3,6 +3,7 @@
 const fs = require('fs');
 const os = require('os');
 
+const args = require('args');
 const chalk = require('chalk');
 const columnify = require('columnify');
 const execa = require('execa');
@@ -11,24 +12,12 @@ const got = require('got');
 const pify = require('pify');
 const opn = require('opn');
 const ora = require('ora');
-const program = require('commander');
 const updateNotifier = require('update-notifier');
 
 const api = require('./api');
 const pkg = require('./package');
 
 updateNotifier({pkg}).notify();
-
-program
-	.version(pkg.version)
-	.option('i, install <plugin>', 'Install a plugin')
-	.option('u, uninstall <plugin>', 'Uninstall a plugin (aliases: rm, remove)')
-	.option('ls, list', 'List installed plugins')
-	.option('s, search <query>', 'Search for plugins on npm')
-	.option('ls-remote', 'List plugins available on npm')
-	.option('d, docs <plugin>', 'Open the npm page of the <plugin> (alias: home)')
-	.option('f, fork <plugin>', 'Forks a plugin from npm into your ~/.hyperterm_plugins/local')
-	.parse(process.argv);
 
 if (!api.exists()) {
 	let msg = chalk.red('You don\'t have HyperTerm installed! :(\n');
@@ -39,24 +28,21 @@ if (!api.exists()) {
 	process.exit(1);
 }
 
-if (program.install) {
-	const plugin = program.install;
+args.command(['i', 'install'], 'Install a plugin', (name, args) => {
+	const plugin = args[0];
 	return api.install(plugin)
 		.then(() => console.log(chalk.green(`${plugin} installed successfully!`)))
 		.catch(err => console.error(chalk.red(err)));
-}
+});
 
-if (['rm', 'remove'].indexOf(program.args[0]) !== -1) {
-	program.uninstall = program.args[1];
-}
-if (program.uninstall) {
-	const plugin = program.uninstall;
+args.command(['u, uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args) => {
+	const plugin = args[0];
 	return api.uninstall(plugin)
 		.then(() => console.log(chalk.green(`${plugin} uninstalled successfully!`)))
 		.catch(err => console.log(chalk.red(err)));
-}
+});
 
-if (program.list) {
+args.command(['ls', 'list'], 'List installed plugins', () => {
 	let plugins = api.list();
 
 	if (plugins) {
@@ -65,11 +51,10 @@ if (program.list) {
 		console.log(chalk.red(`No plugins installed yet.`));
 	}
 	process.exit(1);
-}
+});
 
-const lsRemote = () => { // note that no errors are catched by thif function
+const lsRemote = () => { // note that no errors are catched by this function
 	const URL = 'http://registry.npmjs.org/-/_view/byKeyword?startkey=[%22hyperterm%22]&endkey=[%22hyperterm%22,{}]&group_level=4';
-
 	return got(URL)
 		.then(response => JSON.parse(response.body).rows)
 		.then(entries => entries.map(entry => entry.key))
@@ -82,11 +67,11 @@ const lsRemote = () => { // note that no errors are catched by thif function
 		}));
 };
 
-if (program.search) {
+args.command(['s', 'search'], 'Search for plugins on npm', (name, args) => {
 	const spinner = ora('Searching').start();
-	const query = program.search.toLowerCase();
+	const query = args[0].toLowerCase();
 
-	return lsRemote(query)
+	return lsRemote()
 		.then(entries => {
 			return entries.filter(entry => {
 				return entry.name.indexOf(query) !== -1 ||
@@ -101,7 +86,6 @@ if (program.search) {
 				process.exit(1);
 			} else {
 				let msg = columnify(entries);
-
 				spinner.succeed();
 				msg = msg.substring(msg.indexOf('\n') + 1); // remove header
 				console.log(msg);
@@ -110,9 +94,9 @@ if (program.search) {
 			spinner.fail();
 			console.error(chalk.red(err)); // TODO
 		});
-}
+});
 
-if (program.lsRemote) {
+args.command(['ls-remote'], 'List plugins available on npm', () => {
 	const spinner = ora('Searching').start();
 
 	return lsRemote()
@@ -126,18 +110,15 @@ if (program.lsRemote) {
 			spinner.fail();
 			console.error(chalk.red(err)); // TODO
 		});
-}
+});
 
-if (program.args[0] === 'home') {
-	program.docs = program.args[1];
-}
-if (program.docs) {
-	return opn(`https://npmjs.com/package/${program.docs}`, {wait: false});
-}
+args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args) => {
+	return opn(`https://www.npmjs.com/package/${args[0]}`, {wait: false});
+});
 
-if (program.fork) {
+args.command(['f', 'fork'], 'Fork a plugin from npm into your ~/.hyperterm_plugins/local', (name, args) => {
 	const spinner = ora('Installing').start();
-	const plugin = program.fork;
+	const plugin = args[0];
 	return api.existsOnNpm(plugin).then(() => {
 		if (api.isInstalled(plugin, true)) {
 			spinner.fail();
@@ -173,6 +154,10 @@ if (program.fork) {
 		}
 		process.exit(1);
 	});
-}
+});
 
-program.help();
+const flags = args.parse(process.argv);
+
+if (Object.keys(flags).length !== 0) { // Show help when no command is invoked
+	args.showHelp();
+}
