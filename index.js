@@ -113,7 +113,7 @@ args.command(['ls-remote'], 'List plugins available on npm', () => {
 });
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args) => {
-	return opn(`https://www.npmjs.com/package/${args[0]}`, {wait: false});
+	return opn(`http://ghub.io/${args[0]}`, {wait: false});
 });
 
 args.command(['f', 'fork'], 'Fork a plugin from npm into your ~/.hyperterm_plugins/local', (name, args) => {
