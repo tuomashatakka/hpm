@@ -6,15 +6,15 @@ import mockFs from 'mock-fs';
 import isCi from 'is-ci';
 import pify from 'pify';
 
-const fileName = `${homedir()}/.hyperterm.js`;
+const fileName = `${homedir()}/.hyper.js`;
 const fileContent = 'module.exports = {plugins: [], localPlugins:[]};';
 let api = require('../api');
 
 test.before(async t => {
 	if (api.exists() && !isCi) {
-		// it is ok to have HyperTerm if you are not Travis
+		// it is ok to have Hyper.app if you are not Travis
 	} else {
-		// Travis can't have HyperTerm
+		// Travis can't have Hyper.app
 		t.is(false, api.exists());
 		await t.throws(api.install('🦁'));
 		await t.throws(api.uninstall('🦁'));
@@ -40,7 +40,7 @@ test.after(() => {
 	mockFs.restore();
 });
 
-test('check if hyperterm is installed', t => {
+test('check if hyper.app is installed', t => {
 	t.true(api.exists());
 });
 

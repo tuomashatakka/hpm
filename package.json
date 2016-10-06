@@ -1,7 +1,7 @@
 {
   "name": "hpm-cli",
   "version": "1.4.0",
-  "description": "A plugin manager for HyperTerm",
+  "description": "A plugin manager for Hyper.app",
   "main": "index.js",
   "scripts": {
     "test": "xo && nyc ava",
@@ -19,6 +19,8 @@
   },
   "repository": "zeit/hpm",
   "keywords": [
+    "hyper.app",
+    "hyperapp",
     "hyperterm",
     "package",
     "manager",
