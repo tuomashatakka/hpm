@@ -6,7 +6,7 @@ const npmName = require('npm-name');
 const pify = require('pify');
 const recast = require('recast');
 
-const fileName = `${os.homedir()}/.hyperterm.js`;
+const fileName = `${os.homedir()}/.hyper.js`;
 
 let fileContents;
 let parsedFile;

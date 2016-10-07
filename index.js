@@ -20,10 +20,10 @@ const pkg = require('./package');
 updateNotifier({pkg}).notify();
 
 if (!api.exists()) {
-	let msg = chalk.red('You don\'t have HyperTerm installed! :(\n');
+	let msg = chalk.red('You don\'t have Hyper.app installed! :(\n');
 	msg += `${chalk.red('You are missing')} ${chalk.green('awesomeness')}`;
 	msg += chalk.red(`.\n`);
-	msg += chalk.green('Check it out: https://hyperterm.org/');
+	msg += chalk.green('Check it out: https://hyper.is/');
 	console.error(msg);
 	process.exit(1);
 }
@@ -116,7 +116,7 @@ args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name,
 	return opn(`http://ghub.io/${args[0]}`, {wait: false});
 });
 
-args.command(['f', 'fork'], 'Fork a plugin from npm into your ~/.hyperterm_plugins/local', (name, args) => {
+args.command(['f', 'fork'], 'Fork a plugin from npm into your ~/.hyper_plugins/local', (name, args) => {
 	const spinner = ora('Installing').start();
 	const plugin = args[0];
 	return api.existsOnNpm(plugin).then(() => {
@@ -126,7 +126,7 @@ args.command(['f', 'fork'], 'Fork a plugin from npm into your ~/.hyperterm_plugi
 			process.exit(1);
 		}
 
-		const folderName = `${os.homedir()}/.hyperterm_plugins/local`;
+		const folderName = `${os.homedir()}/.hyper_plugins/local`;
 		const fileName = `${folderName}/package.json`;
 		if (!fileExists(fileName)) {
 			fs.writeFileSync(fileName, '{"name": "hpm-placeholder"}', 'utf-8');
