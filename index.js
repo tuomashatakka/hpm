@@ -54,7 +54,7 @@ args.command(['ls', 'list'], 'List installed plugins', () => {
 });
 
 const lsRemote = () => { // note that no errors are catched by this function
-	const URL = 'http://registry.npmjs.org/-/_view/byKeyword?startkey=[%22hyperterm%22]&endkey=[%22hyperterm%22,{}]&group_level=4';
+	const URL = 'http://registry.npmjs.org/-/_view/byKeyword?startkey=[%22hyperterm%22,%22hyper%22]&endkey=[%22hyperterm%22,{}]&group_level=4';
 	return got(URL)
 		.then(response => JSON.parse(response.body).rows)
 		.then(entries => entries.map(entry => entry.key))
