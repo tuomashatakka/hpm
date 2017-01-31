@@ -2,11 +2,13 @@
 const fs = require('fs');
 const os = require('os');
 
+const chalk = require('chalk');
 const npmName = require('npm-name');
 const pify = require('pify');
 const recast = require('recast');
 
 const fileName = `${os.homedir()}/.hyper.js`;
+const oldConf = `${os.homedir()}/.hyperterm.js`;
 
 let fileContents;
 let parsedFile;
@@ -33,6 +35,9 @@ try {
 }
 
 function exists() {
+	if (fs.existsSync(oldConf)) {
+		console.log(chalk.yellow(`Warning: ${oldConf} should be ${fileName}`));
+	}
 	return fileContents !== undefined;
 }
 
