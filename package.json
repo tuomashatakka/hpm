@@ -1,6 +1,6 @@
 {
   "name": "hpm-cli",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A plugin manager for Hyper.app",
   "main": "index.js",
   "scripts": {
