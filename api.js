@@ -10,17 +10,12 @@ const recast = require('recast');
 const fileName = `${os.homedir()}/.hyper.js`;
 const oldConf = `${os.homedir()}/.hyperterm.js`;
 
-const normalizeArrayOfStrings = item => {
-	let value;
-	switch (item.type) {
-		case 'TemplateLiteral':
-			value = item.quasis[0].value.raw;
-			break;
-		default :
-			value = item.value;
-	}
-	return {value};
-};
+function getPluginName(item) {
+	if (item.type === 'TemplateLiteral') {
+    return item.quasis[0].value.raw;
+  }
+  return item.value;
+}
 
 let fileContents;
 let parsedFile;
@@ -36,11 +31,11 @@ try {
 	const properties = (expression && expression.right && expression.right.properties) || [];
 	plugins = properties.find(property => {
 		return property.key.name === 'plugins';
-	}).value.elements.map(normalizeArrayOfStrings);
+	}).value.elements;
 
 	localPlugins = properties.find(property => {
 		return property.key.name === 'localPlugins';
-	}).value.elements.map(normalizeArrayOfStrings);
+	}).value.elements;
 } catch (err) {
 	if (err.code !== 'ENOENT') { // ENOENT === !exists()
 		throw err;
@@ -57,7 +52,7 @@ function exists() {
 function isInstalled(plugin, locally) {
 	const array = locally ? localPlugins : plugins;
 	if (array && Array.isArray(array)) {
-		return array.find(entry => entry.value === plugin) !== undefined;
+		return array.find(entry => getPluginName(entry) === plugin) !== undefined;
 	}
 	return false;
 }
@@ -103,7 +98,7 @@ function uninstall(plugin) {
 			return reject(`${plugin} is not installed`);
 		}
 
-		const index = plugins.findIndex(entry => entry.value === plugin);
+		const index = plugins.findIndex(entry => getPluginName(entry) === plugin);
 		plugins.splice(index, 1);
 		save().then(resolve).catch(err => reject(err));
 	});
@@ -111,7 +106,7 @@ function uninstall(plugin) {
 
 function list() {
 	if (Array.isArray(plugins)) {
-		return plugins.map(plugin => plugin.value).join('\n');
+		return plugins.map(plugin => getPluginName(plugin)).join('\n');
 	}
 	return false;
 }
