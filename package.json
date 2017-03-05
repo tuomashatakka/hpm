@@ -59,5 +59,10 @@
     "mock-fs": "^3.11.0",
     "nyc": "^8.3.0",
     "xo": "^0.17.0"
+  },
+  "xo": {
+    "space": 2,
+    "semicolon": false,
+    "esnext": true
   }
 }
