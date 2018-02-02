@@ -28,10 +28,11 @@ try {
   parsedFile = recast.parse(fileContents)
 
   const bodyChunks = parsedFile.program.body
-  const moduleExports = bodyChunks.find(({ expression }) => {
-    if (!expression)
+  const moduleExports = bodyChunks.find(({expression}) => {
+    if (!expression) {
       return false
-    const objectName   = expression.left.object.name
+    }
+    const objectName = expression.left.object.name
     const propertyName = expression.left.property && expression.left.property.name
     return objectName === 'module' && (propertyName === 'exports')
   })
